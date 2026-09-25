@@ -72,10 +72,8 @@ def get_run(run_id: int):
         ).fetchone()
         if not row:
             return None
-        from app.services.carton_open import rebase_with_live_n
-
         d = dict(row)
         d["result"] = json.loads(d.pop("result_json"))
-        return rebase_with_live_n(d)
+        return d
     finally:
         conn.close()

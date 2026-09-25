@@ -16,7 +16,8 @@ def tile_count(
     order_count: ceil(raw * (1 + waste_pct/100)) — before box rounding
     box_count / order_count_rounded: order_count rounded up to whole boxes
     of pieces_per_box (pieces_per_box == 1 leaves order_count unchanged).
-    Open-path helpers may call box_round again with the live carton size.
+    Saved runs keep this snapshot; later changes to a tile's carton size
+    only affect new estimates, never stored history.
     """
     area = float(room_l) * float(room_w)
     piece = float(tile_l) * float(tile_w)
