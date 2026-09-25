@@ -72,10 +72,11 @@ def get_run(run_id: int):
         ).fetchone()
         if not row:
             return None
-        from app.services.carton_open import rebase_with_live_n
-
+        # Saved runs are immutable snapshots: the carton size N and the
+        # box-rounded order are fixed at save time and never re-based on the
+        # tile's current pieces_per_box.
         d = dict(row)
         d["result"] = json.loads(d.pop("result_json"))
-        return rebase_with_live_n(d)
+        return d
     finally:
         conn.close()
